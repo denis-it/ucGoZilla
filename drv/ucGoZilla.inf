@@ -1,0 +1,156 @@
+;
+; PROTTOSS ucGoZilla board Setup File
+; for OS Windows 2000/XP/Vista/Seven 32/64 bit versions
+; Powered by PROTTOSS, mail to: prottoss@mail.ru.
+; 2010 Prottoss Electronic Laboratory (c). 
+; All Right Reserved
+;
+
+[Version] 
+Signature = "$Windows NT$"
+Class = Ports
+ClassGuid = {4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider = %COMPANY%
+DriverVer = 09/15/2013,0.0.0.4
+
+[Manufacturer] 
+%MFGNAME% = DeviceList,NT,NTia64,NTamd64
+
+;--------------------------------------------------------------------------
+; Files
+;--------------------------------------------------------------------------
+
+[SourceDisksNames]
+1 = %SOURCENAME%
+
+[SourceDisksFiles.x86]
+libusb0.sys = 1
+
+[SourceDisksFiles.amd64]
+libusb0.sys = 1
+
+[SourceDisksFiles.ia64]
+libusb0.sys = 1
+
+[DestinationDirs]
+FilesSys = 12
+
+[FilesSys]
+libusb0.sys, , , 0x20
+
+;--------------------------------------------------------------------------
+; Devices
+;--------------------------------------------------------------------------
+
+[DeviceList.NT]
+%DEVICENAME_EMPTY% = DriverInstall,USB\%DEVICEID_EMPTY%
+%DEVICENAME_500V2% = DriverInstall,USB\%DEVICEID_500V2%
+%DEVICENAME_JTAG2% = DriverInstall,USB\%DEVICEID_JTAG2%
+
+[DeviceList.NTia64]
+%DEVICENAME_EMPTY% = DriverInstall,USB\%DEVICEID_EMPTY%
+%DEVICENAME_500V2% = DriverInstall,USB\%DEVICEID_500V2%
+%DEVICENAME_JTAG2% = DriverInstall,USB\%DEVICEID_JTAG2%
+
+[DeviceList.NTamd64]
+%DEVICENAME_EMPTY% = DriverInstall,USB\%DEVICEID_EMPTY%
+%DEVICENAME_500V2% = DriverInstall,USB\%DEVICEID_500V2%
+%DEVICENAME_JTAG2% = DriverInstall,USB\%DEVICEID_JTAG2%
+
+;---------------------------------------------------------------------------------------
+; 32 bit section for Windows 2000/2003/XP/Vista/7
+;---------------------------------------------------------------------------------------
+
+[DriverInstall.NT]
+CopyFiles = FilesSys
+DelReg = DriverDelReg
+
+[DriverInstall.NT.HW]
+AddReg = DriverAddReg
+
+[DriverInstall.NT.Services]
+AddService=libusb0, 0x00000002, DriverServiceInst
+
+;---------------------------------------------------------------------------------------
+; 64 bit section for Intel Itanium based systems
+;---------------------------------------------------------------------------------------
+
+[DriverInstall.NTia64]
+CopyFiles = FilesSys
+DelReg = DriverDelReg
+
+[DriverInstall.NTia64.HW]
+AddReg = DriverAddReg
+
+[DriverInstall.NTia64.Services]
+AddService=libusb0, 0x00000002, DriverServiceInst
+
+;---------------------------------------------------------------------------------------
+; 64 bit section for AMD64 and Intel EM64T based systems
+;---------------------------------------------------------------------------------------
+
+[DriverInstall.NTamd64]
+CopyFiles = FilesSys
+DelReg = DriverDelReg
+
+[DriverInstall.NTamd64.HW]
+AddReg = DriverAddReg
+
+[DriverInstall.NTamd64.Services]
+AddService=libusb0, 0x00000002, DriverServiceInst
+
+;--------------------------------------------------------------------------
+; Register keys
+;--------------------------------------------------------------------------
+
+; Older versions of this .inf file installed this keys.
+; They are not needed any more and must be removed.
+[DriverDelReg]
+HKR,,DevLoader
+HKR,,NTMPDriver
+HKR,,EnumPropPages32
+
+[DriverAddReg]
+HKR,,SurpriseRemovalOK,0x00010001,0
+
+; (Optional) a device interface guid can be specified in the .inf file.
+; They can be used to quickly locate a usb device or
+; set of USB devices using the setup api
+; as well as device notification registration.
+;HKR,,DeviceInterfaceGUIDs,0x00010000,<device guid>
+
+; (Optional) the usb configuration value to select when this device
+; is started.  If this key does not exist the first config is selected.
+;HKR,,InitialConfigValue,0x00010001,<your config value>
+
+;--------------------------------------------------------------------------
+; Services
+;--------------------------------------------------------------------------
+
+[DriverServiceInst]
+DisplayName = %SERVICE%
+ServiceType = 1
+StartType = 3
+ErrorControl = 1
+ServiceBinary = %12%\libusb0.sys
+
+;--------------------------------------------------------------------------
+; Strings
+;--------------------------------------------------------------------------
+
+[Strings] 
+COMPANY = "PROTTOSS Electronic Laboratory"
+MFGNAME = "PROTTOSS"
+
+SOURCENAME = "PROTTOSS Install Disk"
+
+DEVICENAME_EMPTY = "PROTTOSS ucGoZilla empty board"
+DEVICEID_EMPTY = "VID_03EB&PID_6124"
+
+DEVICENAME_500V2 = "PROTTOSS ucGoZilla AVR500V2"
+DEVICEID_500V2 = "VID_FFFF&PID_0991"
+
+DEVICENAME_JTAG2 = "PROTTOSS ucGoZilla AVRJTAG2"
+DEVICEID_JTAG2 = "VID_FFFF&PID_0992"
+
+SERVICE = "ucGoZilla"

@@ -1,0 +1,28 @@
+CC			= gcc.exe
+CWARN		= #-Wall -Wextra #-Werror
+CINCLUDES	= -I./include
+CFLAGS		= $(CWARN) $(CINCLUDES) -std=c99
+LDFLAGS		= bin/libusb-1.0.dll
+
+TARGET		= bin/ucGoZilla.exe
+
+SOURCES		= $(wildcard ./*.c)
+OBJECTS		= $(SOURCES:.c=.o)
+
+RM			= rm -fv
+
+.PHONY: all
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+
+clean:
+	${RM} $(OBJECTS) $(TARGET)
+
+.SUFFIXES: .c .o
+
+.c.o:
+	$(CC) $(CFLAGS) -c -o $@ $<
+

@@ -1,6 +1,6 @@
 # ucGoZilla
 
-This is a fork of original Windows-only flash tool for [ucGoZilla](http://prottoss.com/projects/ucgozilla/ucgozilla.htm) AVR programmer.
+This is a cross-platform fork of original Windows-only flash tool for [ucGoZilla](http://prottoss.com/projects/ucgozilla/ucgozilla.htm) AVR programmer.
 
 ## Modifications
 
